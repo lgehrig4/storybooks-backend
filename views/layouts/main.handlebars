@@ -4,16 +4,22 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Storybooks</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+
   </head>
   <body>
-    {{>_header}}
+    {{> _header}}
+    {{#if user}}
+      {{> _add-btn}}
+    {{/if}}
     <main>
       <div class="container">
         {{{body}}}
       </div>
     </main>
-
+    {{> _footer}}
 
     <script
     src="https://code.jquery.com/jquery-3.4.1.js"
@@ -22,9 +28,27 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
+      ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+          toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+          heading: {
+          options: [
+              { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+              { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+              { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+              ]
+          }
+        })
+        .catch( error => {
+          console.log( error );
+        });
+    </script>
+    <script>
       $(document).ready(() => {
         $('.sidenav').sidenav();
+        $('select').formSelect();
       });
     </script>
+
   </body>
 </html>
